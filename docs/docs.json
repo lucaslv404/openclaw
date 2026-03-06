@@ -860,6 +860,7 @@
                   "install/docker",
                   "install/podman",
                   "install/nix",
+                  "install/windows-isolated",
                   "install/ansible",
                   "install/bun"
                 ]
@@ -1455,6 +1456,7 @@
                 "pages": [
                   "zh-CN/install/docker",
                   "zh-CN/install/nix",
+                  "zh-CN/install/windows-isolated",
                   "zh-CN/install/ansible",
                   "zh-CN/install/bun"
                 ]

@@ -21,6 +21,7 @@ Native Windows companion apps are planned.
 - [Getting Started](/start/getting-started) (use inside WSL)
 - [Install & updates](/install/updating)
 - Official WSL2 guide (Microsoft): [https://learn.microsoft.com/windows/wsl/install](https://learn.microsoft.com/windows/wsl/install)
+- For a more isolated setup (dedicated data directory, optional sandbox): [Windows (isolated)](/install/windows-isolated)
 
 ## Gateway
 

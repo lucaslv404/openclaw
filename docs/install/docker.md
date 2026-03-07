@@ -32,6 +32,27 @@ Sandboxing details: [Sandboxing](/gateway/sandboxing)
   [Security hardening for network exposure](/gateway/security#04-network-exposure-bind--port--firewall),
   especially Docker `DOCKER-USER` firewall policy.
 
+## Troubleshooting (Docker host)
+
+### WSL2: Cannot connect to Docker daemon / socket is a directory
+
+When using Docker Engine **inside WSL2** (native `dockerd`, not Docker Desktop), you may see:
+
+- `Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?`
+- Or `ls /run/docker.sock` shows a **directory** instead of a socket (for example after creating a symlink from `/var/run/docker.sock` to `/run/docker.sock` when `/var/run` is already a symlink to `/run`, which can create a self-referential symlink and break the socket).
+
+**Fix:** Ensure the socket is created by systemd and that the service starts in the right order:
+
+```bash
+sudo systemctl stop docker.service docker.socket
+sudo rmdir /run/docker.sock 2>/dev/null   # remove if it is a directory or broken symlink
+sudo systemctl start docker.socket        # socket unit creates the socket first
+sudo systemctl start docker.service
+docker images                             # verify
+```
+
+Do **not** create a symlink from `/var/run/docker.sock` to `/run/docker.sock` when `/var/run` is already a symlink to `/run`. Ensure your user is in the `docker` group (`sudo usermod -aG docker $USER` then log out and back in) so you can run `docker` without sudo.
+
 ## Containerized Gateway (Docker Compose)
 
 ### Quick start (recommended)
